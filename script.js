@@ -49,3 +49,9 @@ function iniciarJogo() {
         botao.addEventListener('click', realizarJogada, { once: true });
     });
 
+    mensagem.textContent = `É a vez de ${jogador1}`;
+
+    modoJogoContainer.style.display = 'none';
+    nomesJogadoresContainer.style.display = 'none';
+}
+
