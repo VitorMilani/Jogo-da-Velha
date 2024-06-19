@@ -87,5 +87,22 @@ function jogadaMaquina() {
 
     realizarJogada({ target: quadrado });
 }
+function verificarVencedor() {
+    const linhasVencedoras = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+
+    for (let linha of linhasVencedoras) {
+        if (tabuleiro[linha[0]] !== undefined &&
+            tabuleiro[linha[0]] === tabuleiro[linha[1]] &&
+            tabuleiro[linha[1]] === tabuleiro[linha[2]]) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 
