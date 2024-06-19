@@ -63,3 +63,20 @@ function realizarJogada(event) {
         return;
     }
 
+    tabuleiro[quIndex] = turno === 1 ? 'X' : 'O';
+    quadrado.textContent = tabuleiro[quIndex];
+
+    if (verificarVencedor()) {
+        finalizarJogo(false);
+    } else if (verificarEmpate()) {
+        finalizarJogo(true);
+    } else {
+        turno *= -1;
+        if (modoJogo === 'um-jogador' && turno === -1) {
+            setTimeout(jogadaMaquina, 500);
+        } else {
+            mensagem.textContent = turno === 1 ? `É a vez de ${jogador1}` : `É a vez de ${jogador2}`;
+        }
+    }
+}
+
