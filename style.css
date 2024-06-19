@@ -62,3 +62,25 @@ body {
     background-color: #fff;
     cursor: pointer;
 }
+
+
+#tabela-pontuacao {
+    width: 300px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#tabela-pontuacao caption {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#tabela-pontuacao th, #tabela-pontuacao td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tabela-pontuacao th {
+    background-color: #f2f2f2;
+}
