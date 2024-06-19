@@ -28,6 +28,7 @@ function selecionarModo() {
 
     nomesJogadoresContainer.style.display = 'block';
 }
+
 function iniciarJogo() {
     jogador1 = jogador1Input.value.trim();
     jogador2 = modoJogo === 'dois-jogadores' ? jogador2Input.value.trim() : 'Máquina';
@@ -36,4 +37,15 @@ function iniciarJogo() {
         alert('Por favor, preencha os nomes dos jogadores.');
         return;
     }
+
+    turno = 1;
+    tabuleiro = Array.from(Array(9).keys());
+
+    botoes.forEach(botao => {
+        botao.textContent = '';
+    });
+
+    botoes.forEach(botao => {
+        botao.addEventListener('click', realizarJogada, { once: true });
+    });
 
