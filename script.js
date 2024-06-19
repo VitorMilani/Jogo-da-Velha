@@ -55,3 +55,11 @@ function iniciarJogo() {
     nomesJogadoresContainer.style.display = 'none';
 }
 
+function realizarJogada(event) {
+    const quadrado = event.target;
+    const quIndex = parseInt(quadrado.dataset.qu);
+
+    if (typeof tabuleiro[quIndex] !== 'number') {
+        return;
+    }
+
