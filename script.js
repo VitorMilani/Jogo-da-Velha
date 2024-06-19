@@ -80,3 +80,12 @@ function realizarJogada(event) {
     }
 }
 
+function jogadaMaquina() {
+    const quadradosVazios = tabuleiro.filter(quadrado => typeof quadrado === 'number');
+    const quIndex = quadradosVazios[Math.floor(Math.random() * quadradosVazios.length)];
+    const quadrado = botoes[quIndex];
+
+    realizarJogada({ target: quadrado });
+}
+
+
