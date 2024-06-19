@@ -87,6 +87,7 @@ function jogadaMaquina() {
 
     realizarJogada({ target: quadrado });
 }
+
 function verificarVencedor() {
     const linhasVencedoras = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -105,4 +106,76 @@ function verificarVencedor() {
     return false;
 }
 
+function verificarEmpate() {
+    return tabuleiro.every(quadrado => typeof quadrado === 'string');
+}
 
+function finalizarJogo(empate) {
+    if (empate) {
+        mensagem.textContent = 'Empate!';
+    } else {
+        const vencedor = turno === 1 ? jogador1 : jogador2;
+        mensagem.textContent = `Parabéns, ${vencedor} venceu!`;
+
+        atualizarPontuacao(vencedor);
+    }
+
+    botoes.forEach(botao => {
+        botao.removeEventListener('click', realizarJogada);
+    });
+
+    reiniciarBotao.style.display = 'block';
+
+    modoJogoContainer.style.display = 'block';
+}
+
+function reiniciarJogo() {
+    tabuleiro = Array.from(Array(9).keys());
+    botoes.forEach(botao => {
+        botao.textContent = '';
+    });
+
+    turno = 1;
+    mensagem.textContent = `É a vez de ${jogador1}`;
+
+    botoes.forEach(botao => {
+        botao.addEventListener('click', realizarJogada, { once: true });
+    });
+
+    reiniciarBotao.style.display = 'none';
+
+    modoJogoContainer.style.display = 'none';
+}
+
+function atualizarPontuacao(jogador) {
+    if (!pontuacaoJogadores[jogador]) {
+        pontuacaoJogadores[jogador] = 0;
+    }
+    pontuacaoJogadores[jogador]++;
+
+    const ranking = Object.entries(pontuacaoJogadores)
+        .sort((a, b) => b[1] - a[1]);
+
+    tabelaPontuacao.innerHTML = '';
+
+    ranking.forEach((item, indice) => {
+        const linha = tabelaPontuacao.insertRow();
+        const colunaJogador = linha.insertCell(0);
+        const colunaPontuacao = linha.insertCell(1);
+
+        colunaJogador.textContent = item[0];
+        colunaPontuacao.textContent = item[1];
+    });
+
+    localStorage.setItem('pontuacaoJogadores', JSON.stringify(pontuacaoJogadores));
+}
+
+function carregarPontuacao() {
+    const pontuacaoSalva = localStorage.getItem('pontuacaoJogadores');
+    if (pontuacaoSalva) {
+        pontuacaoJogadores = JSON.parse(pontuacaoSalva);
+        atualizarPontuacao();
+    }
+}
+
+carregarPontuacao();
