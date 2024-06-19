@@ -28,4 +28,12 @@ function selecionarModo() {
 
     nomesJogadoresContainer.style.display = 'block';
 }
+function iniciarJogo() {
+    jogador1 = jogador1Input.value.trim();
+    jogador2 = modoJogo === 'dois-jogadores' ? jogador2Input.value.trim() : 'Máquina';
+
+    if (modoJogo === 'dois-jogadores' && (jogador1 === '' || jogador2 === '')) {
+        alert('Por favor, preencha os nomes dos jogadores.');
+        return;
+    }
 
