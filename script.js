@@ -7,3 +7,14 @@ const tabelaPontuacao = document.getElementById('tabela-pontuacao').getElementsB
 const modoJogoSelect = document.getElementById('modo');
 const modoJogoContainer = document.querySelector('.modo-jogo');
 const nomesJogadoresContainer = document.querySelector('.nomes-jogadores');
+
+let jogador1;
+let jogador2;
+let modoJogo;
+let turno;
+let tabuleiro;
+let pontuacaoJogadores = {};
+
+function selecionarModo() {
+    modoJogo = modoJogoSelect.value;
+
