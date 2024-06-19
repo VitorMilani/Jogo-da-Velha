@@ -18,3 +18,14 @@ let pontuacaoJogadores = {};
 function selecionarModo() {
     modoJogo = modoJogoSelect.value;
 
+    if (modoJogo === 'um-jogador') {
+        jogador2Input.value = 'Máquina';
+        jogador2Input.disabled = true;
+    } else {
+        jogador2Input.value = '';
+        jogador2Input.disabled = false;
+    }
+
+    nomesJogadoresContainer.style.display = 'block';
+}
+
