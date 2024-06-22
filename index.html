@@ -27,6 +27,7 @@
             <button onclick="iniciarJogo()">Iniciar Jogo</button>
         </div>
 
+        <div class="base-container">
         <div class="base" id="base">
             <button data-qu="0"></button>
             <button data-qu="1"></button>
@@ -39,8 +40,6 @@
             <button data-qu="8"></button>
         </div>
 
-        <div class="mensagem" id="mensagem"></div>
-
         <table id="tabela-pontuacao">
             <thead>
                 <tr>
@@ -51,9 +50,14 @@
             <tbody>
             </tbody>
         </table>
+        </div>
+
+        <div class="mensagem" id="mensagem"></div>
 
         <button id="reiniciar" onclick="reiniciarJogo()" style="display: none;">Reiniciar Jogo</button>
 
+        
+        
     </div>
 
     <script src="script.js"></script>
