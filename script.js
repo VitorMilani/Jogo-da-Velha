@@ -7,6 +7,7 @@ const tabelaPontuacao = document.getElementById('tabela-pontuacao').getElementsB
 const modoJogoSelect = document.getElementById('modo');
 const modoJogoContainer = document.querySelector('.modo-jogo');
 const nomesJogadoresContainer = document.querySelector('.nomes-jogadores');
+const historicoDiv = document.getElementById('historico');
 
 let jogador1;
 let jogador2;
@@ -14,6 +15,7 @@ let modoJogo;
 let turno;
 let tabuleiro;
 let pontuacaoJogadores = {};
+let historicoPartidas = [];
 
 function selecionarModo() {
     modoJogo = modoJogoSelect.value;
@@ -40,7 +42,7 @@ function iniciarJogo() {
 
     turno = 1;
     tabuleiro = Array.from(Array(9).keys());
-
+    historicoPartidas = [];
     botoes.forEach(botao => {
         botao.textContent = '';
     });
@@ -53,6 +55,8 @@ function iniciarJogo() {
 
     modoJogoContainer.style.display = 'none';
     nomesJogadoresContainer.style.display = 'none';
+
+    reiniciarBotao.style.display = 'none';
 }
 
 function realizarJogada(event) {
@@ -65,6 +69,8 @@ function realizarJogada(event) {
 
     tabuleiro[quIndex] = turno === 1 ? 'X' : 'O';
     quadrado.textContent = tabuleiro[quIndex];
+
+    registrarJogadaHistorico(quIndex, turno === 1 ? jogador1 : jogador2);
 
     if (verificarVencedor()) {
         finalizarJogo(false);
@@ -113,10 +119,11 @@ function verificarEmpate() {
 function finalizarJogo(empate) {
     if (empate) {
         mensagem.textContent = 'Empate!';
+        registrarJogadaHistorico(null, 'Empate');
     } else {
         const vencedor = turno === 1 ? jogador1 : jogador2;
         mensagem.textContent = `Parabéns, ${vencedor} venceu!`;
-
+        registrarJogadaHistorico(null, `Vitória de ${vencedor}`);
         atualizarPontuacao(vencedor);
     }
 
@@ -127,6 +134,8 @@ function finalizarJogo(empate) {
     reiniciarBotao.style.display = 'block';
 
     modoJogoContainer.style.display = 'block';
+
+    exibirHistorico();
 }
 
 function reiniciarJogo() {
@@ -145,6 +154,10 @@ function reiniciarJogo() {
     reiniciarBotao.style.display = 'none';
 
     modoJogoContainer.style.display = 'none';
+
+    historicoDiv.style.display = 'none';
+
+    historicoPartidas = [];
 }
 
 function atualizarPontuacao(jogador) {
@@ -178,4 +191,33 @@ function carregarPontuacao() {
     }
 }
 
+function registrarJogadaHistorico(quadradoIndex, jogador) {
+    historicoPartidas.push({ quadradoIndex, jogador });
+    localStorage.setItem('historicoPartidas', JSON.stringify(historicoPartidas));
+}
+
+function exibirHistorico() {
+    historicoDiv.style.display = 'block';
+    historicoDiv.innerHTML = '';
+
+    historicoPartidas.forEach((jogada, index) => {
+        const jogadaText = jogada.quadradoIndex !== null
+            ? `Jogador ${jogada.jogador}: Quadrado ${jogada.quadradoIndex}`
+            : jogada.jogador;
+        const historicoItem = document.createElement('p');
+        historicoItem.textContent = `Jogada ${index + 1}: ${jogadaText}`;
+        historicoDiv.appendChild(historicoItem);
+    });
+}
+
+function carregarHistorico() {
+    const historicoSalvo = localStorage.getItem('historicoPartidas');
+    if (historicoSalvo) {
+        historicoPartidas = JSON.parse(historicoSalvo);
+        exibirHistorico();
+    }
+}
+
 carregarPontuacao();
+
+carregarHistorico();
